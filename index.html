@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello World</title>
+    <title>Hello World!</title>
 </head>
 <body>
-    <p> Hello World $secret_value </p>
+    <h1>Hello World, <span id="secretValue">Loading...</span>!</h1>
+
+    <script>
+        // Use JavaScript to retrieve the secret value from the environment variable
+        const secretValue = process.env.SECRET_VALUE || 'Secret not found';
+
+        // Update the HTML content with the secret value
+        document.getElementById('secretValue').textContent = secretValue;
+    </script>
 </body>
 </html>
