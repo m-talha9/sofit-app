@@ -23,7 +23,8 @@ jobs:
         run: echo "SECRET_VALUE=${{ secrets.YOUR_SECRET_NAME }}" >> $GITHUB_ENV
 
       - name: Replace Placeholder with Secret Value
-        run: sed -i "s/{{SECRET_VALUE}}/${{ secrets.YOUR_SECRET_NAME }}/g" /index.html
+        run: sed -i "s/{{SECRET_VALUE}}/${{ secrets.YOUR_SECRET_NAME }}/g" index.html
+
           
       - name: Build And Deploy
         id: builddeploy
