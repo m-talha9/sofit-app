@@ -27,7 +27,7 @@ jobs:
 
       - name: Generate Version
         id: version
-        run: echo "::set-output name=version::$(date +'%Y%m%d-%H%M')"
+        run: echo "::set-output name=version::$(date +'%Y%m%d')-${{ github.run_number }}"
 
       - name: Replace Placeholder with Version
         run: sed -i "s/{{VERSION}}/${{ steps.version.outputs.version }}/g" index.html
