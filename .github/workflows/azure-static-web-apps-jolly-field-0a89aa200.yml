@@ -42,7 +42,7 @@ jobs:
           mkdir: mkdir -p $version_dir
   
           # Copy the index.html file with the secret value
-          echo: echo "hello world $SECRET_VALUE" > "$version_dir/index.html"
+          echo: echo "hello world $secret_value" > "$version_dir/index.html"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
