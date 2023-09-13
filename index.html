@@ -8,10 +8,19 @@
 
     <script>
         // Use JavaScript to retrieve the secret value from the environment variable
-        const secretValue = process.env.SECRET_VALUE || 'Secret not found';
+        //const secretValue = process.env.SECRET_VALUE || 'Secret not found';
 
         // Update the HTML content with the secret value
-        document.getElementById('secretValue').textContent = secretValue;
+        const secretValuePlaceholder = document.getElementById('secretValue');
+        secretValuePlaceholder.textContent = '{{SECRET_VALUE}}';
+    </script>
+    </script>
+</body>
+</html>
+
+        // Replace the placeholder with the secret value
+        const secretValuePlaceholder = document.getElementById('secretValue');
+        secretValuePlaceholder.textContent = '{{SECRET_VALUE}}';
     </script>
 </body>
 </html>
