@@ -20,10 +20,10 @@ jobs:
           submodules: true
           
       - name: Set Secret Value
-        run: echo "SECRET_VALUE=${{ secrets.YOUR_SECRET_NAME }}" >> $GITHUB_ENV
+        run: echo "SECRET_VALUE=${{ secrets.SECRET_VALUE }}" >> $GITHUB_ENV
 
       - name: Replace Placeholder with Secret Value
-        run: sed -i "s/{{SECRET_VALUE}}/${{ secrets.YOUR_SECRET_NAME }}/g" index.html
+        run: sed -i "s/{{SECRET_VALUE}}/${{ secrets.SECRET_VALUE }}/g" index.html
 
           
       - name: Build And Deploy
