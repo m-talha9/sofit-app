@@ -5,14 +5,17 @@
 </head>
 <body>
     <h1>Hello World, <span id="secretValue">Loading...</span>!</h1>
+    <p>Version: <span id="versionPlaceholder">{{VERSION}}</span></p>
 
     <script>
         // Use JavaScript to retrieve the secret value from the environment variable
-        //const secretValue = process.env.SECRET_VALUE || 'Secret not found';
-
         // Update the HTML content with the secret value
         const secretValuePlaceholder = document.getElementById('secretValue');
         secretValuePlaceholder.textContent = '{{SECRET_VALUE}}';
+
+        // Update the HTML content with the Version
+        const versionPlaceholder = document.getElementById('versionPlaceholder');
+        versionPlaceholder.textContent = '{{VERSION}}';
     </script>
     </script>
 </body>
