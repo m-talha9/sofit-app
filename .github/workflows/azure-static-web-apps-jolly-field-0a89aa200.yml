@@ -27,19 +27,21 @@ jobs:
 
       - name: Get Latest Tag
         id: get_latest_tag
-        run: echo ::set-output name=tag::$(git describe --tags --abbrev=0)
+        run: echo "::set-output name=latest_tag::$(git describe --abbrev=0 --tags)"
+       # run: echo ::set-output name=tag::$(git describe --tags --abbrev=0)
         
       - name: Increment Tag
         id: increment_tag
-        run: echo ::set-output name=tag::$(python increment_tag.py ${{ steps.get_latest_tag.outputs.tag }})
+        run: echo "::set-output name=incremented_tag::v$(node -e 'console.log(require("semver").inc(process.env.LATEST_TAG, "patch"))')"
+        #run: echo ::set-output name=tag::$(python increment_tag.py ${{ steps.get_latest_tag.outputs.tag }})
 
-      - name: Create and Push Tag
+      - name: Create Tag
         if: success()
-        run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
-          git tag -a ${{ steps.increment_tag.outputs.tag }} -m "Version ${{ steps.increment_tag.outputs.tag }}"
-          git push origin ${{ steps.increment_tag.outputs.tag }}
+        run: git tag -a ${{ steps.increment_tag.outputs.incremented_tag }} -m "Version ${{ steps.increment_tag.outputs.incremented_tag }}"
+
+      - name: Push Tag
+        if: success()
+        run: git push origin ${{ steps.increment_tag.outputs.incremented_tag }}
       
      # - name: Generate Version Number
      #   run: echo "VERSION=$(date +'%Y%m%d%H%M%S')-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
