@@ -45,6 +45,16 @@ jobs:
           api_location: "" # Api source code path - optional
           output_location: "/" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
+
+      - name: Sanity Check
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" https://jolly-field-0a89aa200.3.azurestaticapps.net/)
+          if [[ $response -eq 200 ]]; then
+            echo "Sanity check passed. Deployment is successful."
+          else
+            echo "Sanity check failed. Deployment may have issues."
+            exit 1
+          fi
       
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
