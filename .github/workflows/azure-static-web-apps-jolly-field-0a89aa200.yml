@@ -25,8 +25,24 @@ jobs:
       - name: Replace Placeholder with Secret Value
         run: sed -i "s/{{SECRET_VALUE}}/${{ secrets.SECRET_VALUE }}/g" index.html
 
-      - name: Generate Version Number
-        run: echo "VERSION=$(date +'%Y%m%d%H%M%S')-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+      - name: Get Latest Tag
+        id: get_latest_tag
+        run: echo ::set-output name=tag::$(git describe --tags --abbrev=0)
+        
+      - name: Increment Tag
+        id: increment_tag
+        run: echo ::set-output name=tag::$(python increment_tag.py ${{ steps.get_latest_tag.outputs.tag }})
+
+      - name: Create and Push Tag
+        if: success()
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git tag -a ${{ steps.increment_tag.outputs.tag }} -m "Version ${{ steps.increment_tag.outputs.tag }}"
+          git push origin ${{ steps.increment_tag.outputs.tag }}
+      
+     # - name: Generate Version Number
+     #   run: echo "VERSION=$(date +'%Y%m%d%H%M%S')-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
       - name: Build And Deploy
         id: builddeploy
